@@ -5,8 +5,8 @@ Program to display Triple Combo
 @email: ign.nuwara97@gmail.com
 """
 
-def triple_combo(depth, GR, resistivity, NPHI, RHOB, 
-                 min_depth, max_depth, 
+def triple_combo(df, column_depth, column_GR, column_resistivity, 
+                 column_NPHI, column_RHOB, min_depth, max_depth, 
                  min_GR=0, max_GR=150,
                  min_resistivity=0.01, max_resistivity=1000, 
                  color_GR='black', color_resistivity='green', 
@@ -42,7 +42,7 @@ def triple_combo(depth, GR, resistivity, NPHI, RHOB,
   gr.set_ylim(max_depth, min_depth)
   gr.spines['top'].set_position(('outward',10))
   gr.tick_params(axis='x',colors=color_GR)
-  gr.plot(GR, depth, color=color_GR)  
+  gr.plot(df[column_GR], df[column_depth], color=color_GR)  
 
   gr.minorticks_on()
   gr.xaxis.grid(which='major', linestyle='-', linewidth='0.5', color='lime')
@@ -58,7 +58,7 @@ def triple_combo(depth, GR, resistivity, NPHI, RHOB,
   res.set_ylim(max_depth, min_depth)
   res.spines['top'].set_position(('outward',10))
   res.tick_params(axis='x',colors=color_resistivity)
-  res.semilogx(resistivity, depth, color=color_resistivity)    
+  res.semilogx(df[column_resistivity], df[column_depth], color=color_resistivity)    
 
   res.minorticks_on()
   res.xaxis.grid(which='major', linestyle='-', linewidth='0.5', color='lime')
@@ -76,7 +76,7 @@ def triple_combo(depth, GR, resistivity, NPHI, RHOB,
   nphi.set_ylim(max_depth, min_depth)
   nphi.spines['top'].set_position(('outward',10))
   nphi.tick_params(axis='x',colors='blue')
-  nphi.plot(NPHI, depth, color=color_NPHI)
+  nphi.plot(df[column_NPHI], df[column_depth], color=color_NPHI)
 
   nphi.minorticks_on()
   nphi.xaxis.grid(which='major', linestyle='-', linewidth='0.5', color='lime')
@@ -89,14 +89,14 @@ def triple_combo(depth, GR, resistivity, NPHI, RHOB,
   rhob.set_ylim(max_depth, min_depth)
   rhob.spines['top'].set_position(('outward',50))
   rhob.tick_params(axis='x',colors='red')
-  rhob.plot(RHOB, depth, color=color_RHOB)
+  rhob.plot(df[column_RHOB], df[column_depth], color=color_RHOB)
 
   # solution to produce fill between can be found here:
   # https://stackoverflow.com/questions/57766457/how-to-plot-fill-betweenx-to-fill-the-area-between-y1-and-y2-with-different-scal
-  x2p, _ = (rhob.transData + nphi.transData.inverted()).transform(np.c_[RHOB,depth]).T
+  x2p, _ = (rhob.transData + nphi.transData.inverted()).transform(np.c_[df[column_RHOB], df[column_depth]]).T
   nphi.autoscale(False)
-  nphi.fill_betweenx(depth, NPHI, x2p, color="orange", alpha=0.4, where=(x2p>NPHI)) # hydrocarbon
-  nphi.fill_betweenx(depth, NPHI, x2p, color="blue", alpha=0.4, where=(x2p<NPHI)) # water
+  nphi.fill_betweenx(df[column_depth], df[column_NPHI], x2p, color="orange", alpha=0.4, where=(x2p > df[column_NPHI])) # hydrocarbon
+  nphi.fill_betweenx(df[column_depth], df[column_NPHI], x2p, color="blue", alpha=0.4, where=(x2p < df[column_NPHI])) # water
 
   res.minorticks_on()
   res.grid(which='major', linestyle='-', linewidth='0.5', color='lime')
