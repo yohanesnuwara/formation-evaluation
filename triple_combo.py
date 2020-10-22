@@ -1,18 +1,29 @@
-"""
-Program to display Triple Combo
-
-@author: Yohanes Nuwara
-@email: ign.nuwara97@gmail.com
-"""
-
 def triple_combo(df, column_depth, column_GR, column_resistivity, 
                  column_NPHI, column_RHOB, min_depth, max_depth, 
-                 min_GR=0, max_GR=150,
+                 min_GR=0, max_GR=150, sand_GR_line=60,
                  min_resistivity=0.01, max_resistivity=1000, 
                  color_GR='black', color_resistivity='green', 
                  color_RHOB='red', color_NPHI='blue',
                  figsize=(6,10), tight_layout=1, 
                  title_size=15, title_height=1.05):
+  """
+  Producing Triple Combo log
+
+  Input:
+
+  df is your dataframe
+  column_depth, column_GR, column_resistivity, column_NPHI, column_RHOB
+  are column names that appear in your dataframe (originally from the LAS file)
+
+  specify your depth limits; min_depth and max_depth
+
+  input variables other than above are default. You can specify
+  the values yourselves. 
+
+  Output:
+
+  Fill colors; gold (sand), lime green (non-sand), blue (water-zone), orange (HC-zone)
+  """
   
   import matplotlib.pyplot as plt
   from matplotlib.ticker import AutoMinorLocator  
@@ -47,6 +58,9 @@ def triple_combo(df, column_depth, column_GR, column_resistivity,
   gr.minorticks_on()
   gr.xaxis.grid(which='major', linestyle='-', linewidth='0.5', color='lime')
   gr.xaxis.grid(which='minor', linestyle=':', linewidth='1', color='black') 
+
+  gr.fill_betweenx(df[column_depth], sand_GR_line, df[column_GR], where=(sand_GR_line>=df[column_GR]), color = 'gold', linewidth=0) # sand
+  gr.fill_betweenx(df[column_depth], sand_GR_line, df[column_GR], where=(sand_GR_line<df[column_GR]), color = 'lime', linewidth=0) # shale
 
   # Second track: Resistivity
   ax[1].get_xaxis().set_visible(False)
