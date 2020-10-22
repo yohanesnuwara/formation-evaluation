@@ -27,6 +27,7 @@ def ND_plot(denfl, df, column_nphi, column_rhob, column_hue, color_by,
     by increment of 0.05 
   """
 
+  import numpy as np
   import matplotlib.pyplot as plt
   import seaborn as sns  
   plt.style.use('seaborn')
