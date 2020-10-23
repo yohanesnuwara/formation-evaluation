@@ -27,6 +27,7 @@ def triple_combo(df, column_depth, column_GR, column_resistivity,
   
   import matplotlib.pyplot as plt
   from matplotlib.ticker import AutoMinorLocator  
+  import numpy as np
 
   fig, ax=plt.subplots(1,3,figsize=(8,10))
   fig.suptitle('Triple Combo Log', size=title_size, y=title_height)
