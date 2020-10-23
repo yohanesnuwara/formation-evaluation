@@ -29,6 +29,7 @@ def ND_plot(denfl, df, column_nphi, column_rhob, column_hue, color_by,
 
   import numpy as np
   import matplotlib.pyplot as plt
+  import pandas as pd
   import seaborn as sns  
   plt.style.use('seaborn')
   sns.set_theme(color_codes=True)
