@@ -1,6 +1,7 @@
 def well_log_display(df, column_depth, column_list, 
                      column_semilog=None, min_depth=None, max_depth=None, 
                      column_min=None, column_max=None, colors=None, 
+                     fm_tops=None, fm_depths=None, 
                      tight_layout=1, title_size=10):
   """
   Display log side-by-side style
@@ -18,9 +19,14 @@ def well_log_display(df, column_depth, column_list,
   
   colors is the list of colors specified for each log names. Default is None,
     so if don't specify, the colors will be Matplotlib default (blue)
+
+  fm_tops and fm_depths are the list of formation top names and depths.
+    Default is None, so no tops are shown. Specify both lists, if you want
+    to show the tops
   """
-  import matplotlib.pyplot as plt
   
+  import random
+
   if column_semilog==None:
     # column semilog not defined, RT will be plotted in normal axis
     logs = column_list
@@ -114,7 +120,27 @@ def well_log_display(df, column_depth, column_list,
         if min_depth!=None and max_depth!=None:
           # y-axis limit defined
           ax[i].set_ylim(min_depth, max_depth)
-        ax[i].invert_yaxis()    
+        ax[i].invert_yaxis() 
 
+  if fm_tops!=None and fm_depths!=None:
+    # Formation tops and depths are specified, they will be shown
+
+    # produce colors
+    rgb = []
+    for j in range(len(fm_tops)):
+      _ = (random.random(), random.random(), random.random())
+      rgb.append(_)
+
+    for i in range(len(logs)):
+      for j in range(len(fm_tops)):
+        # rgb = (random.random(), random.random(), random.random())
+        ax[i].axhline(y=fm_depths[j], linestyle=":", c=rgb[j], label=fm_tops[j])  
+        # y = fm_depths[j] / (max_depth - min_depth)    
+        # ax[i].text(0.5, y, fm_tops[j], fontsize=5, va='center', ha='center', backgroundcolor='w')
+
+  # plt.legend()
+  # plt.legend(loc='upper center', bbox_to_anchor=(-3, -0.05),
+  #            fancybox=True, shadow=True, ncol=5)  
+  
   plt.tight_layout(tight_layout)
-  plt.show()   
+  plt.show()  
