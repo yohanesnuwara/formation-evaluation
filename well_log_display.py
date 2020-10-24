@@ -24,7 +24,9 @@ def well_log_display(df, column_depth, column_list,
     Default is None, so no tops are shown. Specify both lists, if you want
     to show the tops
   """
-  
+  import numpy as np
+  import matplotlib.pyplot as plt
+  import pandas as pd
   import random
 
   if column_semilog==None:
