@@ -75,7 +75,7 @@ def ND_plot(denfl, df, column_nphi, column_rhob, column_hue, color_by,
     plt.title('Neutron-Density Plot', size=20, pad=15)
     plt.xlim(-0.05, 0.45)
     plt.ylim(3, 1.9)
-    plt.xlabel('NPHI (g/cc)'); plt.ylabel('RHOB (g/cc)')    
+    plt.xlabel('NPHI (v/v)'); plt.ylabel('RHOB (g/cc)')    
 
   if color_by == 'categorical':
     # plot data with color of each formation names (using Seaborn)
@@ -99,6 +99,6 @@ def ND_plot(denfl, df, column_nphi, column_rhob, column_hue, color_by,
     plt.title('Neutron-Density Plot', size=20, pad=15)
     plt.xlim(-0.05, 0.45)
     plt.ylim(3, 1.9)
-    plt.xlabel('NPHI (g/cc)'); plt.ylabel('RHOB (g/cc)')
+    plt.xlabel('NPHI (v/v)'); plt.ylabel('RHOB (g/cc)')
 
     plt.show()
