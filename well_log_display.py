@@ -16,6 +16,9 @@ def well_log_display(df, column_depth, column_list,
   column_semilog is specific for resistivity column; if your resistivity is
     in column 3, specify as: column_semilog=2. Default is None, so if 
     you don't specify, the resistivity will be plotted in normal axis instead
+    
+  column_min is list of minimum values for the x-axes.
+  column_max is list of maximum values for the x-axes.
   
   colors is the list of colors specified for each log names. Default is None,
     so if don't specify, the colors will be Matplotlib default (blue)
