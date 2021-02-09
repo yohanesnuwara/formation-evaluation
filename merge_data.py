@@ -22,6 +22,7 @@ def merge_data_interpolation(df_data, df_new, xdata, ydata, xnew, kind="cubic"):
 
   df: It is the df_new, but now contains the newly interpolated y values
   """
+  import numpy as np
   import scipy
   
   xd = df_data[xdata].values
