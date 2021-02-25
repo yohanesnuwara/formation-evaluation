@@ -1,6 +1,6 @@
 def regrid(df, column_depth, column_feature, depth_regrid):
   """
-  Regrid log data to coarsen or to produce blocky log
+  Regrid log data to coarsen or to produce blocky log by averaging
   """
   import numpy as np
   import pandas as pd
