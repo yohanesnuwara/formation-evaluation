@@ -9,7 +9,7 @@ def merge_data_interpolation(df_data, df_new, xdata, ydata, xnew, kind="cubic"):
   xdata: The x column name in df_data. This value MUST exist in BOTH dataframes 
     above. Usually it is the DEPTH. 
   ydata: The y column name in df_data. This value will be the TARGET for interp.
-    Could be more than one (LIST)
+    Must be in LIST, for example: ["TVD"] or ["TVD", "GR", "RHOB"]
   xnew: The x column name in df_new
   
   THEORY:
@@ -22,9 +22,8 @@ def merge_data_interpolation(df_data, df_new, xdata, ydata, xnew, kind="cubic"):
 
   df: It is the df_new, but now contains the newly interpolated y values
   """
-  import numpy as np
-  import scipy
-  
+  from scipy import interpolate
+
   xd = df_data[xdata].values
   yd = df_data[ydata].values
   xn = df_new[xnew].values
@@ -32,11 +31,13 @@ def merge_data_interpolation(df_data, df_new, xdata, ydata, xnew, kind="cubic"):
   # Interpolation
   for i in range(len(ydata)):
     yd_ = yd[:,i]
-    f = scipy.interpolate.interp1d(xd, yd_, kind=kind, fill_value="extrapolate")
+    f = interpolate.interp1d(xd, yd_, kind=kind, fill_value="extrapolate")
     yn = f(xn)
-    # yn = np.interp(xn, xd, yd_)
-    df_new[ydata[i]] = yn # add new column to df_new
-  
-  df_new[df_new[xnew] > max(xd)] = np.nan
 
-  return df_new
+    # Make copy of df_new (to suppress the caveat warning)
+    dfnew = df_new.copy()
+    dfnew[ydata[i]] = yn # add new column to df_new
+  
+  dfnew[dfnew[xnew] > max(xd)] = np.nan
+
+  return dfnew
