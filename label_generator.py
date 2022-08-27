@@ -21,8 +21,8 @@ def label_generator(df_well, df_tops, column_depth, label_name):
   import pandas as pd
 
   # generate list of formation depths and top names
-  fm_tops = df_tops.iloc[:,0]  
-  fm_depths = df_tops.iloc[:,1] 
+  fm_tops = df_tops.iloc[:,0].values
+  fm_depths = df_tops.iloc[:,1].values
 
   # create FM. LABEL column to well dataframe
   # initiate with NaNs
