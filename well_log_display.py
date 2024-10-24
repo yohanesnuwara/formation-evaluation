@@ -144,5 +144,5 @@ def well_log_display(df, column_depth, column_list,
   # plt.legend(loc='upper center', bbox_to_anchor=(-3, -0.05),
   #            fancybox=True, shadow=True, ncol=5)  
   
-  plt.tight_layout(tight_layout)
+  plt.tight_layout()
   plt.show()  
