@@ -117,5 +117,5 @@ def triple_combo(df, column_depth, column_GR, column_resistivity,
   res.grid(which='major', linestyle='-', linewidth='0.5', color='lime')
   res.grid(which='minor', linestyle=':', linewidth='1', color='black')
 
-  plt.tight_layout(tight_layout)  
+  plt.tight_layout()  
   plt.show() 
