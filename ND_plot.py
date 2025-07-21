@@ -31,7 +31,7 @@ def ND_plot(denfl, df, column_nphi, column_rhob, column_hue, color_by,
   import matplotlib.pyplot as plt
   import pandas as pd
   import seaborn as sns  
-  plt.style.use('seaborn')
+  plt.style.use('ggplot')
   sns.set_theme(color_codes=True)
 
   lsX = np.arange(0, 0.55, 0.05)
