@@ -4,7 +4,7 @@ def well_log_display(df, column_depth, column_list,
                      fm_tops=None, fm_depths=None, 
                      tight_layout=1, title_size=10):
   """
-  Display log side-by-side style
+  Display log side‑by‑side style
   Input:
   df is your dataframe
   specify min_depth and max_depth as the upper and lower depth limit
@@ -15,8 +15,8 @@ def well_log_display(df, column_depth, column_list,
     in column 3, specify as: column_semilog=2. Default is None, so if you don't 
     specify, the resistivity will be plotted in normal axis instead
     
-  column_min is list of minimum values for the x-axes.
-  column_max is list of maximum values for the x-axes.
+  column_min is list of minimum values for the x‑axes.
+  column_max is list of maximum values for the x‑axes.
   
   colors is the list of colors specified for each log names. Default is None,
     so if don't specify, the colors will be Matplotlib default (blue)
@@ -124,25 +124,29 @@ def well_log_display(df, column_depth, column_list,
           ax[i].set_ylim(min_depth, max_depth)
         ax[i].invert_yaxis() 
 
+  # ---------------------------------------------------------------------------
+  #  NEW: draw formation tops AND put the text label on each line
+  # ---------------------------------------------------------------------------
   if fm_tops!=None and fm_depths!=None:
-    # Formation tops and depths are specified, they will be shown
-
-    # produce colors
-    rgb = []
-    for j in range(len(fm_tops)):
-      _ = (random.random(), random.random(), random.random())
-      rgb.append(_)
+    # produce a stable colour per top
+    rgb = [(random.random(), random.random(), random.random())
+           for _ in fm_tops]
 
     for i in range(len(logs)):
-      for j in range(len(fm_tops)):
-        # rgb = (random.random(), random.random(), random.random())
-        ax[i].axhline(y=fm_depths[j], linestyle=":", c=rgb[j], label=fm_tops[j])  
-        # y = fm_depths[j] / (max_depth - min_depth)    
-        # ax[i].text(0.5, y, fm_tops[j], fontsize=5, va='center', ha='center', backgroundcolor='w')
+      for j, top in enumerate(fm_tops):
+        depth = fm_depths[j]
+        ax[i].axhline(y=depth, linestyle=":", c=rgb[j])
 
-  # plt.legend()
-  # plt.legend(loc='upper center', bbox_to_anchor=(-3, -0.05),
-  #            fancybox=True, shadow=True, ncol=5)  
-  
-  plt.tight_layout()
-  plt.show()  
+        # place the formation‐name text slightly inside the left axis
+        xmin, xmax = ax[i].get_xlim()
+        xpos = xmin + 0.02 * (xmax - xmin)   # 2 % from left edge
+        ax[i].text(
+          xpos, depth, top,
+          color=rgb[j], va='center', ha='left',
+          fontsize=7,
+          bbox=dict(boxstyle="round,pad=0.2", fc="white", alpha=0.6)
+        )
+
+  if tight_layout:
+    plt.tight_layout()
+  plt.show()
